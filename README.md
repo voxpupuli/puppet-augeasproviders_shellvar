@@ -51,7 +51,7 @@ shellvar                  | **yes** | **yes** | **yes** | **yes** |
 ## Documentation and examples
 
 Type documentation can be generated with `puppet doc -r type` or viewed on the
-[Puppet Forge page](http://forge.puppetlabs.com/domcleal/augeasproviders).
+[Puppet Forge page](http://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar).
 
 ### manage simple entry
 
