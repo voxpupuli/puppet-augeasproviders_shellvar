@@ -1,0 +1,7 @@
+fixtures:
+  repositories:
+    "augeasproviders_core":
+      repo: "git://github.com/hercules-team/augeasproviders.git"
+      ref: "12b7a59102cc15da84cf795d931e76d9653b58e0"
+  symlinks:
+    augeasproviders_shellvar: "#{source_dir}"

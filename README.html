@@ -1,0 +1,136 @@
+<h1 id="shellvar-typeprovider-for-shell-files-for-puppet">shellvar: type/provider for shell files for Puppet</h1>
+<p>This module provides a new type/provider for Puppet to read and modify shell config files using the Augeas configuration library.</p>
+<p>The advantage of using Augeas over the default Puppet <code>parsedfile</code> implementations is that Augeas will go to great lengths to preserve file formatting and comments, while also failing safely when needed.</p>
+<p>This provider will hide <em>all</em> of the Augeas commands etc., you don't need to know anything about Augeas to make use of it.</p>
+<h2 id="requirements">Requirements</h2>
+<p>Ensure both Augeas and ruby-augeas 0.3.0+ bindings are installed and working as normal.</p>
+<p>See <a href="http://docs.puppetlabs.com/guides/augeas.html#pre-requisites">Puppet/Augeas pre-requisites</a>.</p>
+<h2 id="installing">Installing</h2>
+<p>On Puppet 2.7.14+, the module can be installed easily (<a href="http://docs.puppetlabs.com/puppet/latest/reference/modules_installing.html">documentation</a>):</p>
+<pre><code>puppet module install herculesteam/augeasproviders_shellvar</code></pre>
+<p>You may see an error similar to this on Puppet 2.x (<a href="http://projects.puppetlabs.com/issues/13858">#13858</a>):</p>
+<pre><code>Error 400 on SERVER: Puppet::Parser::AST::Resource failed with error ArgumentError: Invalid resource type `kernel_parameter` at ...</code></pre>
+<p>Ensure the module is present in your puppetmaster's own environment (it doesn't have to use it) and that the master has pluginsync enabled. Run the agent on the puppetmaster to cause the custom types to be synced to its local libdir (<code>puppet master --configprint libdir</code>) and then restart the puppetmaster so it loads them.</p>
+<h2 id="compatibility">Compatibility</h2>
+<h3 id="puppet-versions">Puppet versions</h3>
+<p>Minimum of Puppet 2.7.</p>
+<h3 id="augeas-versions">Augeas versions</h3>
+<p>Augeas Versions | 0.10.0 | 1.0.0 | 1.1.0 | 1.2.0 | :-------------------------|:-------:|:-------:|:-------:|:-------:| <strong>FEATURES</strong> | case-insensitive keys | no | <strong>yes</strong> | <strong>yes</strong> | <strong>yes</strong> | <strong>PROVIDERS</strong> | shellvar | <strong>yes</strong> | <strong>yes</strong> | <strong>yes</strong> | <strong>yes</strong> |</p>
+<h2 id="issues">Issues</h2>
+<p>Please file any issues or suggestions <a href="https://github.com/hercules-team/augeasproviders_shellvar/issues">on GitHub</a>.</p>
+<h2 id="documentation-and-examples">Documentation and examples</h2>
+<p>Type documentation can be generated with <code>puppet doc -r type</code> or viewed on the <a href="http://forge.puppetlabs.com/domcleal/augeasproviders">Puppet Forge page</a>.</p>
+<h3 id="manage-simple-entry">manage simple entry</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure =&gt; present,
+  target =&gt; &quot;/etc/sysconfig/network&quot;,
+  value  =&gt; &quot;host.example.com&quot;,
+}
+
+shellvar { &quot;disable rsyncd&quot;:
+  ensure   =&gt; present,
+  target   =&gt; &quot;/etc/default/rsync&quot;,
+  variable =&gt; &quot;RSYNC_ENABLE&quot;,
+  value    =&gt; &quot;false&quot;,
+}
+
+shellvar { &quot;ntpd options&quot;:
+  ensure   =&gt; present,
+  target   =&gt; &quot;/etc/sysconfig/ntpd&quot;,
+  variable =&gt; &quot;OPTIONS&quot;,
+  value    =&gt; &quot;-g -x -c /etc/myntp.conf&quot;,
+}</code></pre>
+<h3 id="manage-entry-with-comment">manage entry with comment</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure  =&gt; present,
+  target  =&gt; &quot;/etc/sysconfig/network&quot;,
+  comment =&gt; &quot;My server&#39;s hostname&quot;,
+  value   =&gt; &quot;host.example.com&quot;,
+}</code></pre>
+<h3 id="export-values">export values</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure  =&gt; exported,
+  target  =&gt; &quot;/etc/sysconfig/network&quot;,
+  value   =&gt; &quot;host.example.com&quot;,
+}</code></pre>
+<h3 id="unset-values">unset values</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure  =&gt; unset,
+  target  =&gt; &quot;/etc/sysconfig/network&quot;,
+}</code></pre>
+<h3 id="force-quoting-style">force quoting style</h3>
+<p>Values needing quotes will automatically get them, but they can also be explicitly enabled. Unfortunately the provider doesn't help with quoting the values themselves.</p>
+<pre><code>shellvar { &quot;RSYNC_IONICE&quot;:
+  ensure   =&gt; present,
+  target   =&gt; &quot;/etc/default/rsync&quot;,
+  value    =&gt; &quot;-c3&quot;,
+  quoted   =&gt; &quot;single&quot;,
+}</code></pre>
+<h3 id="delete-entry">delete entry</h3>
+<pre><code>shellvar { &quot;RSYNC_IONICE&quot;:
+  ensure =&gt; absent,
+  target =&gt; &quot;/etc/default/rsync&quot;,
+}</code></pre>
+<h3 id="remove-comment-from-entry">remove comment from entry</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure  =&gt; present,
+  target  =&gt; &quot;/etc/sysconfig/network&quot;,
+  comment =&gt; &quot;&quot;,
+}</code></pre>
+<h3 id="replace-commented-value-with-entry">replace commented value with entry</h3>
+<pre><code>shellvar { &quot;HOSTNAME&quot;:
+  ensure    =&gt; present,
+  target    =&gt; &quot;/etc/sysconfig/network&quot;,
+  comment   =&gt; &quot;&quot;,
+  uncomment =&gt; true,
+}</code></pre>
+<h3 id="array-values">array values</h3>
+<p>You can pass array values to the type.</p>
+<p>There are two ways of rendering array values, and the behavior is set using the <code>array_type</code> parameter. <code>array_type</code> takes three possible values:</p>
+<ul>
+<li><code>auto</code> (default): detects the type of the existing variable, defaults to <code>string</code>;</li>
+<li><code>string</code>: renders the array as a string, with a space as element separator;</li>
+<li><code>array</code>: renders the array as a shell array.</li>
+</ul>
+<p>For example:</p>
+<pre><code>shellvar { &quot;PORTS&quot;:
+  ensure     =&gt; present,
+  target     =&gt; &quot;/etc/default/puppetmaster&quot;,
+  value      =&gt; [&quot;18140&quot;, &quot;18141&quot;, &quot;18142&quot;],
+  array_type =&gt; &quot;auto&quot;,
+}</code></pre>
+<p>will create <code>PORTS=&quot;18140 18141 18142&quot;</code> by default, and will change <code>PORTS=(123)</code> to <code>PORTS=(&quot;18140&quot; &quot;18141&quot; &quot;18142&quot;)</code>.</p>
+<pre><code>shellvar { &quot;PORTS&quot;:
+  ensure     =&gt; present,
+  target     =&gt; &quot;/etc/default/puppetmaster&quot;,
+  value      =&gt; [&quot;18140&quot;, &quot;18141&quot;, &quot;18142&quot;],
+  array_type =&gt; &quot;string&quot;,
+}</code></pre>
+<p>will create <code>PORTS=&quot;18140 18141 18142&quot;</code> by default, and will change <code>PORTS=(123)</code> to <code>PORTS=&quot;18140 18141 18142&quot;</code>.</p>
+<pre><code>shellvar { &quot;PORTS&quot;:
+  ensure     =&gt; present,
+  target     =&gt; &quot;/etc/default/puppetmaster&quot;,
+  value      =&gt; [&quot;18140&quot;, &quot;18141&quot;, &quot;18142&quot;],
+  array_type =&gt; &quot;array&quot;,
+}</code></pre>
+<p>will create <code>PORTS=(&quot;18140&quot; &quot;18141&quot; &quot;18142&quot;)</code> by default, and will change <code>PORTS=123</code> to <code>PORTS=(18140 18141 18142)</code>.</p>
+<p>Quoting is honored for arrays:</p>
+<ul>
+<li>When using the string behavior, quoting is global to the string;</li>
+<li>When using the array behavior, each value in the array is quoted as requested.</li>
+</ul>
+<h3 id="appending-to-arrays">appending to arrays</h3>
+<pre><code>shellvar { &quot;GRUB_CMDLINE_LINUX&quot;:
+  ensure       =&gt; present,
+  target       =&gt; &quot;/etc/default/grub&quot;,
+  value        =&gt; &quot;cgroup_enable=memory&quot;,
+  array_append =&gt; true,
+}</code></pre>
+<p>will change <code>GRUB_CMDLINE_LINUX=&quot;quiet splash&quot;</code> to <code>GRUB_CMDLINE_LINUX=&quot;quiet splash cgroup_enable=memory&quot;</code>.</p>
+<pre><code>shellvar { &quot;GRUB_CMDLINE_LINUX&quot;:
+  ensure       =&gt; present,
+  target       =&gt; &quot;/etc/default/grub&quot;,
+  value        =&gt; [&quot;quiet&quot;, &quot;cgroup_enable=memory&quot;],
+  array_append =&gt; true,
+}</code></pre>
+<p>will also change <code>GRUB_CMDLINE_LINUX=&quot;quiet splash&quot;</code> to <code>GRUB_CMDLINE_LINUX=&quot;quiet splash cgroup_enable=memory&quot;</code>.</p>
