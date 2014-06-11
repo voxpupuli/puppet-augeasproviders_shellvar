@@ -2,6 +2,6 @@ fixtures:
   repositories:
     "augeasproviders_core":
       repo: "git://github.com/hercules-team/augeasproviders.git"
-      ref: "12b7a59102cc15da84cf795d931e76d9653b58e0"
+      ref: "2c3f228bbfd2a18c83c63ec9553764a4c572f5e6"
   symlinks:
     augeasproviders_shellvar: "#{source_dir}"
