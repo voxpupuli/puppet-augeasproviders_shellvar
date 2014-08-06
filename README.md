@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/hercules-team/augeasproviders_shellvar.svg?branch=master)](https://travis-ci.org/hercules-team/augeasproviders_shellvar)
+[![Coverage Status](https://img.shields.io/coveralls/hercules-team/augeasproviders_shellvar.svg)](https://coveralls.io/r/hercules-team/augeasproviders_shellvar)
+
+
 # shellvar: type/provider for shell files for Puppet
 
 This module provides a new type/provider for Puppet to read and modify shell
