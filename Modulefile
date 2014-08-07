@@ -1,8 +1,0 @@
-name    'herculesteam-augeasproviders_shellvar'
-version '1.1.0'
-source 'git://github.com/hercules-team/augeasproviders_shellvar'
-author 'Dominic Cleal, Raphael Pinson'
-license 'Apache 2.0'
-summary 'Augeas-based shellvar type and provider for Puppet'
-description 'This module provides a type/provider for shell files using the Augeas configuration API library.'
-project_page 'http://augeasproviders.com'
