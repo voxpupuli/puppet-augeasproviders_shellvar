@@ -86,7 +86,11 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
         aug.rm(unset_path)
         unset_purge(aug)
       end
-      aug.clear("$target/#{resource[:variable]}/export")
+      if is_array?("$target/#{resource[:variable]}", aug)
+        aug.insert("$target/#{resource[:variable]}/1", "export", true)
+      else
+        aug.clear("$target/#{resource[:variable]}/export")
+      end
     end
   end
 

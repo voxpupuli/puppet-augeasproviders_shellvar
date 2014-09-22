@@ -510,6 +510,19 @@ describe provider_class do
       end
     end
 
+    it "should set array value as exported" do
+      apply!(Puppet::Type.type(:shellvar).new(
+        :ensure   => "exported",
+        :variable => "LST_LIST",
+        :target   => target,
+        :provider => "augeas"
+      ))
+
+      aug_open(target, "Shellvars.lns") do |aug|
+        aug.match("LST_LIST/export").should_not == []
+      end
+    end
+
     it "should set value as exported from unset" do
       apply!(Puppet::Type.type(:shellvar).new(
         :ensure   => "exported",
