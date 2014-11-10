@@ -181,15 +181,17 @@ Puppet::Type.newtype(:shellvar) do
     identity = lambda { |x| x }
     [
       [
-        /^(\S+)\s+in\s+(\S+)$/,
+        /^((\S+)\s+in\s+(\S+))$/,
         [
+          [ :name, identity ],
           [ :variable, identity ],
           [ :target, identity ]
         ]
       ],
       [
-        /(\S+)/,
+        /((\S+))/,
         [
+          [ :name, identity ],
           [ :variable, identity ]
         ]
       ],
