@@ -55,10 +55,10 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
   def is_array?(path=nil, aug=nil)
     if aug.nil? || path.nil?
       augopen do |aug|
-        not aug.match("$target/#{resource[:name]}/1").empty?
+        not aug.match("$target/#{resource[:variable]}/1").empty?
       end
     else
-      not aug.match("$target/#{resource[:name]}/1").empty?
+      not aug.match("$target/#{resource[:variable]}/1").empty?
     end
   end
 
@@ -164,7 +164,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
   def create
     augopen! do |aug|
       # Prefer to create the node next to a commented out entry
-      commented = aug.match("$target/#comment[.=~regexp('#{resource[:name]}([^a-z\.].*)?')]")
+      commented = aug.match("$target/#comment[.=~regexp('#{resource[:variable]}([^a-z\.].*)?')]")
       comment_ins = '$resource'
 
       if resource[:ensure] == :unset
@@ -179,7 +179,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
         aug.set(unset_empty, resource[:variable])
       else
         unless commented.empty?
-          aug.insert(commented.first, resource[:name], false)
+          aug.insert(commented.first, resource[:variable], false)
           aug.rm(commented.first) if resource[:uncomment] == :true
         end
         set_values('$target', aug, resource[:value])
