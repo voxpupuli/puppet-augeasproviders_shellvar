@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.3
+
+- Make sure :name is always fed by the composite namevar (GH #3)
+- Always use resource[:variable] instead of resource[:name] in the provider
+
 ## 2.0.2
 
 - Add target as namevar, activate composite namevars (GH #2)
