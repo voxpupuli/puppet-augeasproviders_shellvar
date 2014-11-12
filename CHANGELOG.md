@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- Fix Travis build
+
 ## 2.0.3
 
 - Make sure :name is always fed by the composite namevar (GH #3)
