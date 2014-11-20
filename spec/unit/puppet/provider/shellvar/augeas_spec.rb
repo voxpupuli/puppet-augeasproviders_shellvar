@@ -124,6 +124,23 @@ describe provider_class do
         { "ENABLE" = "true" { "export" } }
       ')
     end
+
+    # GH #8
+    it "should create new entry as exported with comment" do
+      apply!(Puppet::Type.type(:shellvar).new(
+        :ensure   => "exported",
+        :name     => "ENABLE",
+        :value    => "true",
+        :comment  => "this is exported",
+        :target   => target,
+        :provider => "augeas"
+      ))
+
+      augparse(target, "Shellvars.lns", '
+        { "#comment" = "ENABLE: this is exported" }
+        { "ENABLE" = "true" { "export" } }
+      ')
+    end
   end
 
   context "with two empty files" do
