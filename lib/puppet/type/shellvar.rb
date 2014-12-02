@@ -65,20 +65,18 @@ Puppet::Type.newtype(:shellvar) do
     end
 
     def insync?(is)
-      if provider.resource[:array_append]
-        should_arr = Array(should)
+      should_arr = Array(should)
 
-        # Join and split to ensure all elements are parsed
-        is_str = is.is_a?(Array) ? is.join(' ') : is
-        is_arr = is_str.split(' ')
+      # Join and split to ensure all elements are parsed
+      is_str = is.is_a?(Array) ? is.join(' ') : is
+      is_arr = is_str.split(' ')
+
+      if provider.resource[:array_append]
         (should_arr - is_arr).empty?
+      elsif should.size > 1
+        should_arr == is_arr
       else
-        case provider.array_type
-        when :string
-          is == Array(should.join(' '))
-        when :array
-          is == should
-        end
+        should == is
       end
     end
 

@@ -136,7 +136,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
       aug.match('$resource/*').map { |p| aug.get(p) }
     else
       value = aug.get('$resource')
-      if value =~ /^(["'])(.*)(\1)$/
+      if value =~ /^(["'])(.*)(\1)$/m
         value = $2
       end
       [value]
@@ -153,7 +153,30 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
     case my_array_type
     when :string
       oldvalue = aug.get("#{path}/#{resource[:variable]}")
-      aug.set("#{path}/#{resource[:variable]}", quoteit(values.join(' '), oldvalue))
+
+      # When dealing with array entries
+      # try hard to keep spacing by using Shellvars_list
+      aug.rm('/parsed')
+      aug.set('/input', "#{resource[:variable]}=#{oldvalue}\n")
+      if values.size > 1 \
+        && aug.respond_to?(:text_store) \
+        && aug.text_store('Shellvars_list.lns', '/input', '/parsed')
+
+        # Replace all values
+        aug.rm("/parsed/#{resource[:variable]}/value")
+        # Set automatic quoting
+        aug.set("/parsed/#{resource[:variable]}/quote", whichquote(values.join(' '), oldvalue))
+        values.each do |v|
+          aug.set("/parsed/#{resource[:variable]}/value[last()+1]", v)
+        end
+
+        # Transform back into Shellvars format
+        aug.text_retrieve('Shellvars_list.lns', '/input', '/parsed', '/newvalue')
+        newvalue = aug.get('/newvalue').sub("#{resource[:variable]}=", '').chomp
+        aug.set("#{path}/#{resource[:variable]}", newvalue)
+      else
+        aug.set("#{path}/#{resource[:variable]}", quoteit(values.join(' '), oldvalue))
+      end
     when :array
       values.each_with_index do |v, i|
         aug.set("#{path}/#{resource[:variable]}/#{i}", quoteit(v))
