@@ -622,6 +622,66 @@ describe provider_class do
     end
   end
 
+  # Only test multiline when it is supported in Shellvars
+  if provider_class.parsed_as?("FOO=\"bar\nbaz\"\n", '/FOO', 'Shellvars.lns')
+    context "with full file containing multiline entries" do
+      let(:tmptarget) { aug_fixture("full_multiline") }
+      let(:target) { tmptarget.path }
+
+      describe "when updating value" do
+        it "should update value in multiline string" do
+          apply!(Puppet::Type.type(:shellvar).new(
+            :name       => "ML_LIST",
+            :value      => ["foo", "123", "baz"],
+            :array_type => 'string',
+            :target     => target,
+            :provider   => "augeas"
+          ))
+
+          if provider_class.aug_handler.respond_to? :text_store \
+           and provider_class.parsed_as?("FOO=\"bar\nbaz\"\n", '/FOO/value', 'Shellvars_list.lns')
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo
+  123
+baz\"" }  
+            ')
+          else
+            # No support for clean multiline replacements without store/retrieve
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo 123 baz\"" }
+            ')
+          end
+        end
+      end
+
+      describe "when using array_append" do
+        it "should not remove existing values in multiline entry" do
+          apply!(Puppet::Type.type(:shellvar).new(
+            :name         => "ML_LIST",
+            :value        => ["foo", "fooz"],
+            :array_append => true,
+            :target       => target,
+            :provider     => "augeas"
+          ))
+
+          if provider_class.aug_handler.respond_to? :text_store \
+           and provider_class.parsed_as?("FOO=\"bar\nbaz\"\n", '/FOO/value', 'Shellvars_list.lns')
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo
+  bar
+baz fooz\"" }
+            ')
+          else
+            # No support for clean multiline replacements without store/retrieve
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo bar baz fooz\"" }
+            ')
+          end
+        end
+      end
+    end
+  end
+
   context "with broken file" do
     let(:tmptarget) { aug_fixture("broken") }
     let(:target) { tmptarget.path }
