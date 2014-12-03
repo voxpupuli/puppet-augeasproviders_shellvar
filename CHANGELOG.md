@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- Add multiline value support
+- Depend on augeasproviders_core >= 2.1.0
+
 ## 2.0.4
 
 - Fix Travis build
