@@ -17,6 +17,7 @@ Puppet::Type.newtype(:shellvar) do
         provider.create
       elsif !provider.is_unset?
         provider.unset
+        @resource.property(:value).sync if @resource.property(:value)
       end
     end
 
@@ -26,6 +27,7 @@ Puppet::Type.newtype(:shellvar) do
         provider.create
       elsif !provider.is_exported?
         provider.export
+        @resource.property(:value).sync if @resource.property(:value)
       end
     end
 
