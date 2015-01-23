@@ -505,6 +505,22 @@ describe provider_class do
           { "STR_LIST" = "\"foo bar baz fooz\"" }
         ')
       end
+
+      it "should set value as exported" do
+        apply!(Puppet::Type.type(:shellvar).new(
+          :ensure       => "exported",
+          :name         => "STR_LIST",
+          :value        => ["bar", "qux"],
+          :array_append => true,
+          :target       => target,
+          :provider     => "augeas"
+        ))
+
+        aug_open(target, "Shellvars.lns") do |aug|
+          aug.get("STR_LIST").should == '"foo bar baz qux"'
+          aug.match("STR_LIST/export").should_not == []
+        end
+      end
     end
 
     describe "when updating comment" do

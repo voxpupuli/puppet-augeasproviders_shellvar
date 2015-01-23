@@ -148,8 +148,9 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
 
     # Detect array type *before* removing subnodes
     my_array_type = array_type(path, aug)
-    # Remove in any case, because we might convert an array to a string
-    aug.rm("#{path}/#{resource[:variable]}/*")
+    # Remove because we might convert an array to a string
+    # Only remove seq entries, not unless/export
+    aug.rm("#{path}/#{resource[:variable]}/*[label()=~regexp('^[0-9]+$')]")
     case my_array_type
     when :string
       oldvalue = aug.get("#{path}/#{resource[:variable]}")
