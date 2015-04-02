@@ -1,6 +1,9 @@
-[![Puppet Forge](http://img.shields.io/puppetforge/v/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
-[![Build Status](https://travis-ci.org/hercules-team/augeasproviders_shellvar.svg?branch=master)](https://travis-ci.org/hercules-team/augeasproviders_shellvar)
+[![Puppet Forge Version](http://img.shields.io/puppetforge/v/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
+[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
+[![Puppet Forge Endorsement](https://img.shields.io/puppetforge/e/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
+[![Build Status](https://img.shields.io/travis/hercules-team/augeasproviders_shellvar/master.svg)](https://travis-ci.org/hercules-team/augeasproviders_shellvar)
 [![Coverage Status](https://img.shields.io/coveralls/hercules-team/augeasproviders_shellvar.svg)](https://coveralls.io/r/hercules-team/augeasproviders_shellvar)
+[![Gemnasium](https://img.shields.io/gemnasium/hercules-team/augeasproviders_shellvar.svg)](https://gemnasium.com/hercules-team/augeasproviders_shellvar)
 
 
 # shellvar: type/provider for shell files for Puppet
