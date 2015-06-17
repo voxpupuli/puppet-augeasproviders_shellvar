@@ -144,6 +144,16 @@ values themselves.
       uncomment => true,
     }
 
+### set many variables in the same file
+
+    augeasproviders_shellvar::bulk { [
+        'DEVICE=eth0',
+        'NAME=eth0',
+        "HWADDR=${hwaddress}",
+      ]: 
+      target => '/etc/sysconfig/network',
+    }
+
 ### array values
 
 You can pass array values to the type.
