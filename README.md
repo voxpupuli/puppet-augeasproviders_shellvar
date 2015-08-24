@@ -140,7 +140,15 @@ values themselves.
     shellvar { "HOSTNAME":
       ensure    => present,
       target    => "/etc/sysconfig/network",
-      comment   => "",
+      value     => "host.example.com",
+      uncomment => true,
+    }
+
+### uncomment a value
+
+    shellvar { "HOSTNAME":
+      ensure    => present,
+      target    => "/etc/sysconfig/network",
       uncomment => true,
     }
 

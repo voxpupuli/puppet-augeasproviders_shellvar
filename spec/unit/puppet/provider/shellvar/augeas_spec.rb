@@ -251,6 +251,44 @@ describe provider_class do
       end
     end
 
+    it "should uncomment entry" do
+      apply!(Puppet::Type.type(:shellvar).new(
+        :name      => "SYNC_HWCLOCK",
+        :ensure    => "present",
+        :uncomment => true,
+        :target    => target,
+        :provider  => "augeas"
+      ))
+
+      if unset_seq?
+        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
+          { "SYNC_HWCLOCK" = "no" }
+          { "EXAMPLE" = "foo" }
+          { "@unset" { "1" = "EXAMPLE_U" } }
+          { "EXAMPLE_E" = "baz" { "export" } }
+          { "STR_LIST" = "\"foo bar baz\"" }
+          { "LST_LIST"
+            { "1" = "foo" }
+            { "2" = "\"bar baz\"" }
+            { "3" = "123" }
+          }
+        ')
+      else
+        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
+          { "SYNC_HWCLOCK" = "no" }
+          { "EXAMPLE" = "foo" }
+          { "@unset" = "EXAMPLE_U" }
+          { "EXAMPLE_E" = "baz" { "export" } }
+          { "STR_LIST" = "\"foo bar baz\"" }
+          { "LST_LIST"
+            { "1" = "foo" }
+            { "2" = "\"bar baz\"" }
+            { "3" = "123" }
+          }
+        ')
+      end
+    end
+
     it "should delete entries" do
       apply!(Puppet::Type.type(:shellvar).new(
         :name     => "RETRIES",

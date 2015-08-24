@@ -188,6 +188,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
     augopen! do |aug|
       # Prefer to create the node next to a commented out entry
       commented = aug.match("$target/#comment[.=~regexp('#{resource[:variable]}([^a-z\.].*)?')]")
+      commented_values = commented.empty? ? [] : aug.get(commented.first).split('=')[1].split(' ')
       comment_ins = '$resource'
 
       if resource[:ensure] == :unset
@@ -205,7 +206,12 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
           aug.insert(commented.first, resource[:variable], false)
           aug.rm(commented.first) if resource[:uncomment] == :true
         end
-        set_values('$target', aug, resource[:value])
+        if resource[:value].nil? && resource[:uncomment] == :true
+          values = commented_values
+        else
+          values = resource[:value]
+        end
+        set_values('$target', aug, values)
         aug.clear("$target/#{resource[:variable]}/export") if resource[:ensure] == :exported
       end
 
