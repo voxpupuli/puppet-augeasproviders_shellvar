@@ -1,5 +1,5 @@
 # Options for ntpdate
-OPTIONS = "-p 2"
+[ OPTIONS = "-p 2"
 
 # Number of retries before giving up
 RETRIES=2
