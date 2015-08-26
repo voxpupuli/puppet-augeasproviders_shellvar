@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0
+
+- Detect value in existing comment when uncommenting (GH #18)
+- Improve README.md
+- Use containerized Travis CI infrastructure
+- Test on Puppet 4
+- Update copyright
+
 ## 2.1.1
 
 - Fix metadata.json
