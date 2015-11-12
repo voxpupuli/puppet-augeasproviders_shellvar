@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.1
+
+- Only remove seq entries in array entries (GH #10)
+- Resync value when exporting/unsetting (GH #10)
+
 ## 2.2.0
 
 - Detect value in existing comment when uncommenting (GH #18)
