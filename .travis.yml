@@ -46,10 +46,10 @@ addons:
       - augeas-1.3.0
 
     packages:
-      - augeas-tools
-      - augeas-lenses
-      - libaugeas0
-      - libaugeas-dev
+      - augeas-tools=0.10*
+      - augeas-lenses=0.10*
+      - libaugeas0=0.10*
+      - libaugeas-dev=0.10*
       - libxml2-dev
 
 matrix:
