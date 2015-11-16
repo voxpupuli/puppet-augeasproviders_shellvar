@@ -1,5 +1,5 @@
 language: ruby
-sudo: required
+sudo: false
 rvm:
   - 1.8.7
   - 1.9.3
@@ -36,6 +36,21 @@ env:
   # Test latest Puppet version
   - PUPPET=4.0 RUBY_AUGEAS=0.5
 
+addons:
+  apt:
+    sources:
+      - augeas
+      - augeas-1.0.0
+      - augeas-1.1.0
+      - augeas-1.2.0
+      - augeas-1.3.0
+
+    packages:
+      - augeas-tools
+      - augeas-lenses
+      - libaugeas0
+      - libaugeas-dev
+      - libxml2-dev
 
 matrix:
   fast_finish: true
