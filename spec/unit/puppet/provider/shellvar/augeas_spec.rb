@@ -697,7 +697,7 @@ describe provider_class do
             augparse_filter(target, "Shellvars.lns", "ML_LIST", '
               { "ML_LIST" = "\"foo
   123
-baz\"" }  
+baz\"" }
             ')
           else
             # No support for clean multiline replacements without store/retrieve
@@ -751,6 +751,25 @@ baz fooz\"" }
       txn.any_failed?.should_not == nil
       @logs.first.level.should == :err
       @logs.first.message.include?(target).should == true
+    end
+  end
+
+  context "with commented file" do
+    let(:tmptarget) { aug_fixture("commented") }
+    let(:target) { tmptarget.path }
+
+    it "should create simple new entry" do
+      apply!(Puppet::Type.type(:shellvar).new(
+        :name     => "UMASK",
+        :value    => "0770",
+        :target   => target,
+        :provider => "augeas"
+      ))
+
+      augparse(target, "Shellvars.lns", '
+        { "#comment" = "UMASK sets the initial shell file creation mode mask.  See umask(1)." }
+        { "UMASK" = "0770" }
+      ')
     end
   end
 end
