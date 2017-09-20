@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- Upped supported Puppet versions to include Puppet 5
+
 ## 2.2.1
 
 - Only remove seq entries in array entries (GH #10)
