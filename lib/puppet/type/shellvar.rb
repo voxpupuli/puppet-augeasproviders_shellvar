@@ -178,27 +178,26 @@ Puppet::Type.newtype(:shellvar) do
   end
 
   def self.title_patterns
-    identity = lambda { |x| x }
     [
       [
         /^((\S+)\s+in\s+(\S+))$/,
         [
-          [ :name, identity ],
-          [ :variable, identity ],
-          [ :target, identity ]
+          [ :name ],
+          [ :variable ],
+          [ :target ]
         ]
       ],
       [
         /((\S+))/,
         [
-          [ :name, identity ],
-          [ :variable, identity ]
+          [ :name ],
+          [ :variable ]
         ]
       ],
       [
         /(.*)/,
         [
-          [ :name, identity ]
+          [ :name ]
         ]
       ]
     ]
