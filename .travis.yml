@@ -4,7 +4,7 @@ sudo: required
 rvm:
   - 2.1.9
   # Ruby with Puppet 5
-  - 2.4.0
+  - 2.4.4
 notifications:
   email:
    - raphael.pinson@camptocamp.com
@@ -13,9 +13,9 @@ env:
   # Test Puppet 4
   - PUPPET=4.0 RUBY_AUGEAS=0.5
   # Test Oldest Puppet, Inc. supported Puppet
-  - PUPPET=4.7.1 RUBY_AUGEAS=0.5 FORGE_PUBLISH=true
+  - PUPPET=4.10.4 RUBY_AUGEAS=0.5 FORGE_PUBLISH=true
   # Test latest Puppet version
-  - PUPPET=5.0 RUBY_AUGEAS=0.5
+  - PUPPET=5.5 RUBY_AUGEAS=0.5
 
 matrix:
   fast_finish: true
@@ -23,7 +23,7 @@ matrix:
     # base exclude
     # No support for Ruby 2.1.9 in Puppet 5
     - rvm: 2.1.9
-      env: PUPPET=5.0 RUBY_AUGEAS=0.5
+      env: PUPPET=5.5 RUBY_AUGEAS=0.5
 
 install:
   - "travis_retry ./.travis.sh"
