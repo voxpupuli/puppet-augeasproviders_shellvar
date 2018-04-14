@@ -162,9 +162,9 @@ Puppet::Type.newtype(:shellvar) do
 
   newparam(:uncomment) do
     desc "Whether to remove commented value when found."
-    
+
     newvalues :true, :false
-    
+
     defaultto :false
 
     munge do |v|
