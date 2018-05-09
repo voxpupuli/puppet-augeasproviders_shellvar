@@ -162,9 +162,9 @@ Puppet::Type.newtype(:shellvar) do
 
   newparam(:uncomment) do
     desc "Whether to remove commented value when found."
-
+    
     newvalues :true, :false
-
+    
     defaultto :false
 
     munge do |v|
@@ -178,26 +178,27 @@ Puppet::Type.newtype(:shellvar) do
   end
 
   def self.title_patterns
+    identity = lambda { |x| x }
     [
       [
         /^((\S+)\s+in\s+(\S+))$/,
         [
-          [ :name ],
-          [ :variable ],
-          [ :target ]
+          [ :name, identity ],
+          [ :variable, identity ],
+          [ :target, identity ]
         ]
       ],
       [
         /((\S+))/,
         [
-          [ :name ],
-          [ :variable ]
+          [ :name, identity ],
+          [ :variable, identity ]
         ]
       ],
       [
         /(.*)/,
         [
-          [ :name ]
+          [ :name, identity ]
         ]
       ]
     ]
