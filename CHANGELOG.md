@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+- Fix support for 'puppet generate types'
+
 ## 2.2.4
 
 - Revert the 'puppet generate types' fix due to a discovery that it does not
