@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.4
+
+- Revert the 'puppet generate types' fix due to a discovery that it does not
+  work properly prior to puppet 4.10.4 due to a bug in puppet.
+
 ## 2.2.3
 
 - Fix support for 'puppet generate types'

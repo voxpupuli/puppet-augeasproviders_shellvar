@@ -1,6 +1,6 @@
 {
   "name": "herculesteam-augeasproviders_shellvar",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "author": "Dominic Cleal, Raphael Pinson",
   "summary": "Augeas-based shellvar type and provider for Puppet",
   "license": "Apache-2.0",
