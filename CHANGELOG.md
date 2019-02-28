@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+- Add support for Puppet 6
+- Deprecate support for Puppet < 5
+- Update supported OSes in metadata.json
+
 ## 3.0.0
 
 - Fix support for 'puppet generate types'
