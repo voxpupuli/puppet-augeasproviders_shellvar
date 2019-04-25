@@ -32,6 +32,7 @@ Puppet::Type.newtype(:shellvar) do
     end
 
     def insync?(is)
+      return true if should == :absent and provider.resource[:array_append] and provider.exists?
       return true if should == :unset and is == :present and provider.is_unset?
       return true if should == :exported and is == :present and provider.is_exported?
       return false if should == :present and provider.is_unset?
@@ -44,6 +45,8 @@ Puppet::Type.newtype(:shellvar) do
         provider.ununset
       elsif should == :present and provider.is_exported?
         provider.unexport
+      elsif should == :absent and provider.resource[:array_append]
+        @resource.property(:value).sync
       else
         super
       end
@@ -73,7 +76,9 @@ Puppet::Type.newtype(:shellvar) do
       is_str = is.is_a?(Array) ? is.join(' ') : is
       is_arr = is_str.split(' ')
 
-      if provider.resource[:array_append]
+      if provider.resource[:array_append] and provider.resource[:ensure] == :absent
+        (is_arr - (is_arr - should_arr)).empty?
+      elsif provider.resource[:array_append]
         (should_arr - is_arr).empty?
       elsif should.size > 1
         should_arr == is_arr
@@ -84,14 +89,19 @@ Puppet::Type.newtype(:shellvar) do
 
     def sync
       if provider.resource[:array_append]
-        # Merge the two arrays
         is = @resource.property(:value).retrieve
 
         # Join and split to ensure all elements are parsed
         is_str = is.is_a?(Array) ? is.join(' ') : is
         is_arr = is_str.split(' ')
 
-        provider.value = is_arr | Array(self.should)
+        if provider.resource[:ensure] == :absent
+          # Remove "should" array from "is" array
+          provider.value = is_arr - Array(self.should)
+        else
+          # Merge the two arrays
+          provider.value = is_arr | Array(self.should)
+        end
       else
         # Use the should array
         provider.value = self.should
