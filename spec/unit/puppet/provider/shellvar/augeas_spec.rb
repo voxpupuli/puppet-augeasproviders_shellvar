@@ -182,34 +182,8 @@ describe provider_class do
         :provider => "augeas"
       ))
 
-      if unset_seq?
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "#comment" = "SYNC_HWCLOCK=no" }
-          { "SYNC_HWCLOCK" = "yes" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" { "1" = "EXAMPLE_U" } }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
-      else
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "#comment" = "SYNC_HWCLOCK=no" }
-          { "SYNC_HWCLOCK" = "yes" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" = "EXAMPLE_U" }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
+      aug_open(target, "Shellvars.lns") do |aug|
+        aug.get("SYNC_HWCLOCK[preceding-sibling::#comment[.='SYNC_HWCLOCK=no']]").should == "yes"
       end
     end
 
@@ -222,32 +196,8 @@ describe provider_class do
         :provider  => "augeas"
       ))
 
-      if unset_seq?
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "SYNC_HWCLOCK" = "yes" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" { "1" = "EXAMPLE_U" } }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
-      else
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "SYNC_HWCLOCK" = "yes" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" = "EXAMPLE_U" }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
+      aug_open(target, "Shellvars.lns") do |aug|
+        aug.get("SYNC_HWCLOCK").should == "yes"
       end
     end
 
@@ -260,32 +210,8 @@ describe provider_class do
         :provider  => "augeas"
       ))
 
-      if unset_seq?
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "SYNC_HWCLOCK" = "no" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" { "1" = "EXAMPLE_U" } }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
-      else
-        augparse_filter(target, "Shellvars.lns", '*[preceding-sibling::#comment[.=~regexp(".*sync hw clock.*")]]', '
-          { "SYNC_HWCLOCK" = "no" }
-          { "EXAMPLE" = "foo" }
-          { "@unset" = "EXAMPLE_U" }
-          { "EXAMPLE_E" = "baz" { "export" } }
-          { "STR_LIST" = "\"foo bar baz\"" }
-          { "LST_LIST"
-            { "1" = "foo" }
-            { "2" = "\"bar baz\"" }
-            { "3" = "123" }
-          }
-        ')
+      aug_open(target, "Shellvars.lns") do |aug|
+        aug.get("SYNC_HWCLOCK").should == "no"
       end
     end
 
@@ -320,6 +246,21 @@ describe provider_class do
         end
       end
     end
+
+	it "should uncomment value and append" do
+		apply!(Puppet::Type.type(:shellvar).new(
+			:name         => "LS_JAVA_OPTS",
+			:value        => ["option2", "option3"],
+			:array_append => true,
+			:uncomment    => true,
+			:target       => target,
+			:provider     => "augeas"
+		))
+
+		augparse_filter(target, "Shellvars.lns", "LS_JAVA_OPTS", '
+		   { "LS_JAVA_OPTS" = "\"option1 option2 option3\"" }
+						')
+	end
 
     describe "when updating value" do
       it "should change unquoted value" do
