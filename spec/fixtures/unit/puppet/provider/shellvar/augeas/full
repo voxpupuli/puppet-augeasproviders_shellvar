@@ -10,6 +10,7 @@ RETRIES=2
 #SYNC_HWCLOCK=no
 
 #LS_JAVA_OPTS="option1"
+#LS_JAVA_OPTS_MULT="option1 option2"
 
 EXAMPLE=foo
 
