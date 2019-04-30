@@ -26,34 +26,10 @@ See [Puppet/Augeas pre-requisites](http://docs.puppetlabs.com/guides/augeas.html
 
 ## Installing
 
-On Puppet 2.7.14+, the module can be installed easily ([documentation](http://docs.puppetlabs.com/puppet/latest/reference/modules_installing.html)):
+The module can be installed easily ([documentation](http://docs.puppetlabs.com/puppet/latest/reference/modules_installing.html)):
 
     puppet module install herculesteam/augeasproviders_shellvar
 
-You may see an error similar to this on Puppet 2.x ([#13858](http://projects.puppetlabs.com/issues/13858)):
-
-    Error 400 on SERVER: Puppet::Parser::AST::Resource failed with error ArgumentError: Invalid resource type `shellvar` at ...
-
-Ensure the module is present in your puppetmaster's own environment (it doesn't
-have to use it) and that the master has pluginsync enabled.  Run the agent on
-the puppetmaster to cause the custom types to be synced to its local libdir
-(`puppet master --configprint libdir`) and then restart the puppetmaster so it
-loads them.
-
-## Compatibility
-
-### Puppet versions
-
-Minimum of Puppet 2.7.
-
-### Augeas versions
-
-Augeas Versions           | 0.10.0  | 1.0.0   | 1.1.0   | 1.2.0   |
-:-------------------------|:-------:|:-------:|:-------:|:-------:|
-**FEATURES**              |
-case-insensitive keys     | no      | **yes** | **yes** | **yes** |
-**PROVIDERS**             |
-shellvar                  | **yes** | **yes** | **yes** | **yes** |
 
 ## Documentation and examples
 
