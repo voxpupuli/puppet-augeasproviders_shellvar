@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0 [unreleased]
+
+- Add array remove functionality (#36)
+
 ## 3.1.0
 
 - Add support for Puppet 6
