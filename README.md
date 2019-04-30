@@ -217,6 +217,26 @@ will change `GRUB_CMDLINE_LINUX="quiet splash"` to `GRUB_CMDLINE_LINUX="quiet sp
 
 will also change `GRUB_CMDLINE_LINUX="quiet splash"` to `GRUB_CMDLINE_LINUX="quiet splash cgroup_enable=memory"`.
 
+### removing from arrays
+
+    shellvar { "GRUB_CMDLINE_LINUX":
+      ensure       => absent,
+      target       => "/etc/default/grub",
+      value        => "cgroup_enable=memory",
+      array_append => true,
+    }
+
+will change `GRUB_CMDLINE_LINUX="quiet splash cgroup_enable=memory"` to `GRUB_CMDLINE_LINUX="quiet splash"`.
+
+    shellvar { "GRUB_CMDLINE_LINUX":
+      ensure       => absent,
+      target       => "/etc/default/grub",
+      value        => ["quiet", "cgroup_enable=memory"],
+      array_append => true,
+    }
+
+will also change `GRUB_CMDLINE_LINUX="splash cgroup_enable=memory"` to `GRUB_CMDLINE_LINUX="splash"`.
+
 ## Issues
 
 Please file any issues or suggestions [on GitHub](https://github.com/hercules-team/augeasproviders_shellvar/issues).

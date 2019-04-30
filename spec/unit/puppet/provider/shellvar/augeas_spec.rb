@@ -523,6 +523,23 @@ describe provider_class do
       end
     end
 
+    describe "when using array_append with ensure absent" do
+      it "should only remove specified values" do
+        apply!(Puppet::Type.type(:shellvar).new(
+          :name         => "STR_LIST",
+          :value        => ["fooz", "bar"],
+          :ensure       => "absent",
+          :array_append => true,
+          :target       => target,
+          :provider     => "augeas"
+        ))
+
+        augparse_filter(target, "Shellvars.lns", "STR_LIST", '
+          { "STR_LIST" = "\"foo baz\"" }
+        ')
+      end
+    end
+
     describe "when updating comment" do
       it "should add comment" do
         apply!(Puppet::Type.type(:shellvar).new(
@@ -729,6 +746,32 @@ baz fooz\"" }
             # No support for clean multiline replacements without store/retrieve
             augparse_filter(target, "Shellvars.lns", "ML_LIST", '
               { "ML_LIST" = "\"foo bar baz fooz\"" }
+            ')
+          end
+        end
+      end
+
+      describe "when using array_append with ensure absent" do
+        it "should only remove specified values in multiline entry" do
+          apply!(Puppet::Type.type(:shellvar).new(
+            :name         => "ML_LIST",
+            :value        => ["fooz", "bar"],
+            :ensure       => "absent",
+            :array_append => true,
+            :target       => target,
+            :provider     => "augeas"
+          ))
+
+          if provider_class.aug_handler.respond_to? :text_store \
+           and provider_class.parsed_as?("FOO=\"bar\nbaz\"\n", '/FOO/value', 'Shellvars_list.lns')
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo
+  baz\"" }
+            ')
+          else
+            # No support for clean multiline replacements without store/retrieve
+            augparse_filter(target, "Shellvars.lns", "ML_LIST", '
+              { "ML_LIST" = "\"foo baz\"" }
             ')
           end
         end
