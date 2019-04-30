@@ -248,19 +248,34 @@ describe provider_class do
     end
 
 	it "should uncomment value and append" do
-		apply!(Puppet::Type.type(:shellvar).new(
-			:name         => "LS_JAVA_OPTS",
-			:value        => ["option2", "option3"],
-			:array_append => true,
-			:uncomment    => true,
-			:target       => target,
-			:provider     => "augeas"
-		))
+      apply!(Puppet::Type.type(:shellvar).new(
+        :name         => "LS_JAVA_OPTS",
+        :value        => ["option2", "option3"],
+        :array_append => true,
+        :uncomment    => true,
+        :target       => target,
+        :provider     => "augeas"
+      ))
 
-		augparse_filter(target, "Shellvars.lns", "LS_JAVA_OPTS", '
-		   { "LS_JAVA_OPTS" = "\"option1 option2 option3\"" }
-						')
-	end
+      augparse_filter(target, "Shellvars.lns", "LS_JAVA_OPTS", '
+        { "LS_JAVA_OPTS" = "\"option1 option2 option3\"" }
+      ')
+    end
+
+	it "should uncomment values and append" do
+      apply!(Puppet::Type.type(:shellvar).new(
+        :name         => "LS_JAVA_OPTS_MULT",
+        :value        => ["option2", "option3"],
+        :array_append => true,
+        :uncomment    => true,
+        :target       => target,
+        :provider     => "augeas"
+      ))
+
+      augparse_filter(target, "Shellvars.lns", "LS_JAVA_OPTS_MULT", '
+        { "LS_JAVA_OPTS_MULT" = "\"option1 option2 option3\"" }
+      ')
+    end
 
     describe "when updating value" do
       it "should change unquoted value" do
