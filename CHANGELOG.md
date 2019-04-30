@@ -3,6 +3,7 @@
 ## 4.0.0 [unreleased]
 
 - Add array remove functionality (#36)
+- Make uncomment work with array_append (fix #13)
 
 ## 3.1.0
 
