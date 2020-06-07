@@ -3,6 +3,7 @@
 [![Puppet Forge Endorsement](https://img.shields.io/puppetforge/e/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
 [![Build Status](https://img.shields.io/travis/hercules-team/augeasproviders_shellvar/master.svg)](https://travis-ci.org/hercules-team/augeasproviders_shellvar)
 [![Coverage Status](https://img.shields.io/coveralls/hercules-team/augeasproviders_shellvar.svg)](https://coveralls.io/r/hercules-team/augeasproviders_shellvar)
+[![Sponsor](https://img.shields.io/badge/%E2%99%A5-Sponsor-hotpink.svg)](https://github.com/sponsors/raphink)
 
 
 # shellvar: type/provider for shell files for Puppet
