@@ -7,7 +7,6 @@
   "source": "https://github.com/hercules-team/augeasproviders_shellvar",
   "project_page": "https://github.com/hercules-team/augeasproviders_shellvar",
   "issues_url": "https://github.com/hercules-team/augeasproviders_shellvar/issues",
-  "description": "This module provides a type/provider for shell files using the Augeas configuration API library.",
   "dependencies": [
     {
       "name": "herculesteam/augeasproviders_core",
@@ -59,5 +58,9 @@
       "name": "puppet",
       "version_requirement": ">= 5.0.0 < 7.0.0"
     }
-  ]
+  ],
+  "description": "This module provides a type/provider for shell files using the Augeas configuration API library.",
+  "pdk-version": "1.17.0",
+  "template-url": "pdk-default#1.17.0",
+  "template-ref": "tags/1.17.0-0-gd3a4319"
 }
