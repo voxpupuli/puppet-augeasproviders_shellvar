@@ -380,10 +380,12 @@ describe provider_class do
                       provider: 'augeas',
         ))
 
+        # rubocop:disable RSpec/InstanceVariable
         txn.any_failed?.should_not.nil?
         logs_num = (Puppet::Util::Package.versioncmp(Puppet.version, '3.4.0') >= 0) ? 1 : 0
         @logs[logs_num].level.should eq(:err)
         @logs[logs_num].message.include?('Failed to save').should be true
+        # rubocop:enable RSpec/InstanceVariable
       end
 
       it 'updates string array value as auto string' do
@@ -746,10 +748,11 @@ baz fooz\"" }
                     target: target,
                     provider: 'augeas',
       ))
-
+      # rubocop:disable RSpec/InstanceVariable
       txn.any_failed?.should_not.nil?
       @logs.first.level.should eq(:err)
       @logs.first.message.include?(target).should be true
+      # rubocop:enable RSpec/InstanceVariable
     end
   end
 
