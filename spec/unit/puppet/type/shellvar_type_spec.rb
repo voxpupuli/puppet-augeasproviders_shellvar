@@ -23,8 +23,8 @@ describe Puppet::Type.type(:shellvar) do
   context 'when using composite namevar' do
     it 'has a variable and target' do
       resource = Puppet::Type.type(:shellvar).new name: 'foo in /tmp/bar'
-      resource[:variable].should == 'foo'
-      resource[:target].should == '/tmp/bar'
+      resource[:variable].should eq('foo')
+      resource[:target].should eq('/tmp/bar')
     end
   end
 end
