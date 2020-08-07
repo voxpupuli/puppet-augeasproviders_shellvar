@@ -183,7 +183,7 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.get("SYNC_HWCLOCK[preceding-sibling::#comment[.='SYNC_HWCLOCK=no']]").should == 'yes'
+        aug.get("SYNC_HWCLOCK[preceding-sibling::#comment[.='SYNC_HWCLOCK=no']]").should eq('yes')
       end
     end
 
@@ -197,7 +197,7 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.get('SYNC_HWCLOCK').should == 'yes'
+        aug.get('SYNC_HWCLOCK').should eq('yes')
       end
     end
 
@@ -211,7 +211,7 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.get('SYNC_HWCLOCK').should == 'no'
+        aug.get('SYNC_HWCLOCK').should eq('no')
       end
     end
 
@@ -224,8 +224,8 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('RETRIES').should == []
-        aug.match("#comment[. =~ regexp('RETRIES:.*')]").should == []
+        aug.match('RETRIES').should be_empty
+        aug.match("#comment[. =~ regexp('RETRIES:.*')]").should be_empty
       end
     end
 
@@ -238,11 +238,11 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('EXAMPLE_U').should == []
+        aug.match('EXAMPLE_U').should be_empty
         if unset_seq?
-          aug.match("@unset[*='EXAMPLE_U']").should == []
+          aug.match("@unset[*='EXAMPLE_U']").should be_empty
         else
-          aug.match("@unset[.='EXAMPLE_U']").should == []
+          aug.match("@unset[.='EXAMPLE_U']").should be_empty
         end
       end
     end
@@ -382,8 +382,8 @@ describe provider_class do
 
         txn.any_failed?.should_not.nil?
         logs_num = (Puppet::Util::Package.versioncmp(Puppet.version, '3.4.0') >= 0) ? 1 : 0
-        @logs[logs_num].level.should == :err
-        @logs[logs_num].message.include?('Failed to save').should == true
+        @logs[logs_num].level.should eq(:err)
+        @logs[logs_num].message.include?('Failed to save').should be true
       end
 
       it 'updates string array value as auto string' do
@@ -473,8 +473,8 @@ describe provider_class do
         ))
 
         aug_open(target, 'Shellvars.lns') do |aug|
-          aug.get('STR_LIST').should == '"foo bar baz qux"'
-          aug.match('STR_LIST/export').should_not == []
+          aug.get('STR_LIST').should eq('"foo bar baz qux"')
+          aug.match('STR_LIST/export').should_not be_empty
         end
       end
     end
@@ -519,8 +519,8 @@ describe provider_class do
         ))
 
         aug_open(target, 'Shellvars.lns') do |aug|
-          aug.match("#comment[. = 'retry setting']").should_not == []
-          aug.match("#comment[. = 'RETRIES: Never gonna give you up']").should_not == []
+          aug.match("#comment[. = 'retry setting']").should_not be_empty
+          aug.match("#comment[. = 'RETRIES: Never gonna give you up']").should_not be_empty
         end
       end
 
@@ -533,8 +533,8 @@ describe provider_class do
         ))
 
         aug_open(target, 'Shellvars.lns') do |aug|
-          aug.match("#comment[. =~ regexp('RETRIES:.*')]").should == []
-          aug.match("#comment[. = 'retry setting']").should_not == []
+          aug.match("#comment[. =~ regexp('RETRIES:.*')]").should be_empty
+          aug.match("#comment[. = 'retry setting']").should_not be_empty
         end
       end
     end
@@ -548,8 +548,8 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('EXAMPLE').should == []
-        aug.match('@unset').size.should == 2
+        aug.match('EXAMPLE').should be_empty
+        aug.match('@unset').size.should eq(2)
       end
     end
 
@@ -562,8 +562,8 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('EXAMPLE_E').should == []
-        aug.match('@unset').size.should == 2
+        aug.match('EXAMPLE_E').should be_empty
+        aug.match('@unset').size.should eq(2)
       end
     end
 
@@ -577,7 +577,7 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('EXAMPLE/export').should_not == []
+        aug.match('EXAMPLE/export').should_not be_empty
       end
     end
 
@@ -590,7 +590,7 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('LST_LIST/export').should_not == []
+        aug.match('LST_LIST/export').should_not be_empty
       end
     end
 
@@ -605,11 +605,11 @@ describe provider_class do
 
       aug_open(target, 'Shellvars.lns') do |aug|
         if unset_seq?
-          aug.match("@unset[*='EXAMPLE_U']").should == []
+          aug.match("@unset[*='EXAMPLE_U']").should be_empty
         else
-          aug.match("@unset[.='EXAMPLE_U']").should == []
+          aug.match("@unset[.='EXAMPLE_U']").should be_empty
         end
-        aug.match('EXAMPLE_U/export').should_not == []
+        aug.match('EXAMPLE_U/export').should_not be_empty
       end
     end
 
@@ -624,12 +624,12 @@ describe provider_class do
 
       aug_open(target, 'Shellvars.lns') do |aug|
         if unset_seq?
-          aug.match("@unset[*='EXAMPLE_U']").should == []
+          aug.match("@unset[*='EXAMPLE_U']").should be_empty
         else
-          aug.match("@unset[.='EXAMPLE_U']").should == []
+          aug.match("@unset[.='EXAMPLE_U']").should be_empty
         end
-        aug.match('EXAMPLE_U/export').should == []
-        aug.get('EXAMPLE_U').should == 'foo'
+        aug.match('EXAMPLE_U/export').should be_empty
+        aug.get('EXAMPLE_U').should eq('foo')
       end
     end
 
@@ -643,8 +643,8 @@ describe provider_class do
       ))
 
       aug_open(target, 'Shellvars.lns') do |aug|
-        aug.match('EXAMPLE_E/export').should == []
-        aug.get('EXAMPLE_E').should == 'foo'
+        aug.match('EXAMPLE_E/export').should be_empty
+        aug.get('EXAMPLE_E').should eq('foo')
       end
     end
   end
@@ -748,8 +748,8 @@ baz fooz\"" }
       ))
 
       txn.any_failed?.should_not.nil?
-      @logs.first.level.should == :err
-      @logs.first.message.include?(target).should == true
+      @logs.first.level.should eq(:err)
+      @logs.first.message.include?(target).should be true
     end
   end
 
