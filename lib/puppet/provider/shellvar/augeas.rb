@@ -55,8 +55,8 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
 
   def array?(path = nil, aug = nil)
     if aug.nil? || path.nil?
-      augopen do |aug|
-        !aug.match("$target/#{resource[:variable]}/1").empty?
+      augopen do |a|
+        !a.match("$target/#{resource[:variable]}/1").empty?
       end
     else
       !aug.match("$target/#{resource[:variable]}/1").empty?
@@ -226,7 +226,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
                    else
                      # value is provided and replacement requested
                      resource[:value]
-                            end
+                   end
                  else
                    resource[:value]
                  end
