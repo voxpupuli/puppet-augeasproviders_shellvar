@@ -53,7 +53,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
     aug.rm('$target/@unset[count(*)=0]') if unset_seq?
   end
 
-  def is_array?(path = nil, aug = nil)
+  def array?(path = nil, aug = nil)
     if aug.nil? || path.nil?
       augopen do |aug|
         !aug.match("$target/#{resource[:variable]}/1").empty?
@@ -63,13 +63,13 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
     end
   end
 
-  def is_exported?
+  def exported?
     augopen do |aug|
       !aug.match("$target/#{resource[:variable]}/export").empty?
     end
   end
 
-  def is_unset?
+  def unset?
     augopen do |aug|
       if unset_seq?
         !aug.match("$target/@unset/*[.='#{resource[:variable]}']").empty?
@@ -87,7 +87,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
         aug.rm(unset_path)
         unset_purge(aug)
       end
-      if is_array?("$target/#{resource[:variable]}", aug)
+      if array?("$target/#{resource[:variable]}", aug)
         aug.insert("$target/#{resource[:variable]}/1", 'export', true)
       else
         aug.clear("$target/#{resource[:variable]}/export")
@@ -122,7 +122,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
 
   def array_type(path = nil, aug = nil)
     if resource[:array_type] == :auto
-      if is_array?(path, aug)
+      if array?(path, aug)
         :array
       else
         :string
@@ -133,7 +133,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
   end
 
   def get_values(path, aug)
-    if is_array?(path, aug)
+    if array?(path, aug)
       aug.match('$resource/*').map { |p| aug.get(p) }
     else
       value = aug.get('$resource')
