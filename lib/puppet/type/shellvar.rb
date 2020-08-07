@@ -15,7 +15,7 @@ Puppet::Type.newtype(:shellvar) do
       current = retrieve
       if current == :absent
         provider.create
-      elsif !provider.is_unset?
+      elsif !provider.unset?
         provider.unset
         @resource.property(:value).sync if @resource.property(:value)
       end
@@ -25,7 +25,7 @@ Puppet::Type.newtype(:shellvar) do
       current = retrieve
       if current == :absent
         provider.create
-      elsif !provider.is_exported?
+      elsif !provider.exported?
         provider.export
         @resource.property(:value).sync if @resource.property(:value)
       end
@@ -33,17 +33,17 @@ Puppet::Type.newtype(:shellvar) do
 
     def insync?(is)
       return true if should == :absent && provider.resource[:array_append] && provider.exists?
-      return true if should == :unset && is == :present && provider.is_unset?
-      return true if should == :exported && is == :present && provider.is_exported?
-      return false if should == :present && provider.is_unset?
-      return false if should == :present && provider.is_exported?
+      return true if should == :unset && is == :present && provider.unset?
+      return true if should == :exported && is == :present && provider.exported?
+      return false if should == :present && provider.unset?
+      return false if should == :present && provider.exported?
       super
     end
 
     def sync
-      if should == :present && provider.is_unset?
+      if should == :present && provider.unset?
         provider.ununset
-      elsif should == :present && provider.is_exported?
+      elsif should == :present && provider.exported?
         provider.unexport
       elsif should == :absent && provider.resource[:array_append]
         @resource.property(:value).sync
