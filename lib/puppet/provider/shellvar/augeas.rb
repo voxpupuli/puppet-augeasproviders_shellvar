@@ -3,11 +3,11 @@
 # Copyright (c) 2012 Dominic Cleal
 # Licensed under the Apache License, Version 2.0
 
-raise("Missing augeasproviders_core dependency") if Puppet::Type.type(:augeasprovider).nil?
-Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:augeasprovider).provider(:default)) do
-  desc "Uses Augeas API to update shell script variables"
+raise('Missing augeasproviders_core dependency') if Puppet::Type.type(:augeasprovider).nil?
+Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasprovider).provider(:default)) do
+  desc 'Uses Augeas API to update shell script variables'
 
-  confine :feature => :augeas
+  confine feature: :augeas
 
   lens { 'Shellvars.lns' }
 
@@ -43,38 +43,38 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
 
   def unset_empty
     if unset_seq?
-      "$target/@unset[count(*)=0]/1"
+      '$target/@unset[count(*)=0]/1'
     else
       "$target/@unset[.='']"
     end
   end
 
   def unset_purge(aug)
-    aug.rm("$target/@unset[count(*)=0]") if unset_seq?
+    aug.rm('$target/@unset[count(*)=0]') if unset_seq?
   end
 
-  def is_array?(path=nil, aug=nil)
+  def is_array?(path = nil, aug = nil)
     if aug.nil? || path.nil?
       augopen do |aug|
-        not aug.match("$target/#{resource[:variable]}/1").empty?
+        !aug.match("$target/#{resource[:variable]}/1").empty?
       end
     else
-      not aug.match("$target/#{resource[:variable]}/1").empty?
+      !aug.match("$target/#{resource[:variable]}/1").empty?
     end
   end
 
   def is_exported?
     augopen do |aug|
-      not aug.match("$target/#{resource[:variable]}/export").empty?
+      !aug.match("$target/#{resource[:variable]}/export").empty?
     end
   end
 
   def is_unset?
     augopen do |aug|
       if unset_seq?
-        not aug.match("$target/@unset/*[.='#{resource[:variable]}']").empty?
+        !aug.match("$target/@unset/*[.='#{resource[:variable]}']").empty?
       else
-        not aug.match("$target/@unset[.='#{resource[:variable]}']").empty?
+        !aug.match("$target/@unset[.='#{resource[:variable]}']").empty?
       end
     end
   end
@@ -88,7 +88,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
         unset_purge(aug)
       end
       if is_array?("$target/#{resource[:variable]}", aug)
-        aug.insert("$target/#{resource[:variable]}/1", "export", true)
+        aug.insert("$target/#{resource[:variable]}/1", 'export', true)
       else
         aug.clear("$target/#{resource[:variable]}/export")
       end
@@ -120,7 +120,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
     end
   end
 
-  def array_type(path=nil, aug=nil)
+  def array_type(path = nil, aug = nil)
     if resource[:array_type] == :auto
       if is_array?(path, aug)
         :array
@@ -137,8 +137,8 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
       aug.match('$resource/*').map { |p| aug.get(p) }
     else
       value = aug.get('$resource')
-      if value =~ /^(["'])(.*)(\1)$/m
-        value = $2
+      if value =~ %r{^(["'])(.*)(\1)$}m
+        value = Regexp.last_match(2)
       end
       [value]
     end
@@ -192,12 +192,12 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
       commented = aug.match("$target/#comment[.=~regexp('#{resource[:variable]}([^a-z\.].*)?')]")
 
       commented_values = []
-      if ! commented.empty?
-        if aug.get(commented.first).include?('=')
-          commented_values = unquoteit(aug.get(commented.first).split('=')[1]).split(' ')
-        else
-          commented_values = unquoteit(aug.get(commented.first)).split(' ')
-        end
+      unless commented.empty?
+        commented_values = if aug.get(commented.first).include?('=')
+                             unquoteit(aug.get(commented.first).split('=')[1]).split(' ')
+                           else
+                             unquoteit(aug.get(commented.first)).split(' ')
+                           end
       end
       comment_ins = '$resource'
 
@@ -216,27 +216,27 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
           aug.insert(commented.first, resource[:variable], false)
           aug.rm(commented.first) if resource[:uncomment] == :true
         end
-        if resource[:uncomment] == :true
-          if resource[:value].nil?
-            # value is not provided
-            values = commented_values
-          elsif resource[:array_append]
-            # value is provided and merge requested
-            values = commented_values | resource[:value]
-          else
-            # value is provided and replacement requested
-            values = resource[:value]
-          end
-        else
-          values = resource[:value]
-        end
+        values = if resource[:uncomment] == :true
+                   if resource[:value].nil?
+                     # value is not provided
+                     commented_values
+                   elsif resource[:array_append]
+                     # value is provided and merge requested
+                     commented_values | resource[:value]
+                   else
+                     # value is provided and replacement requested
+                     resource[:value]
+                            end
+                 else
+                   resource[:value]
+                 end
         set_values('$target', aug, values)
         aug.clear("$target/#{resource[:variable]}/export") if resource[:ensure] == :exported
       end
 
       setvars(aug)
       if resource[:comment]
-        aug.insert(comment_ins, "#comment", true)
+        aug.insert(comment_ins, '#comment', true)
         aug.set("$target/#comment[.='']",
                 "#{resource[:variable]}: #{resource[:comment]}")
       end
@@ -281,8 +281,8 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
     augopen do |aug|
       after_comment = after_comment_node(resource)
       comment = aug.get("$target/#comment[following-sibling::*[1][self::#{after_comment}]][. =~ regexp('#{resource[:variable]}:.*')]")
-      comment.sub!(/^#{resource[:variable]}:\s*/, "") if comment
-      comment || ""
+      comment.sub!(%r{^#{resource[:variable]}:\s*}, '') if comment
+      comment || ''
     end
   end
 
@@ -294,7 +294,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, :parent => Puppet::Type.type(:auge
         aug.rm(cmtnode)
       else
         if aug.match(cmtnode).empty?
-          aug.insert("$target/#{resource[:variable]}", "#comment", true)
+          aug.insert("$target/#{resource[:variable]}", '#comment', true)
         end
         aug.set("$target/#comment[following-sibling::*[1][self::#{after_comment}]]",
                 "#{resource[:variable]}: #{resource[:comment]}")

@@ -4,15 +4,15 @@
 # Licensed under the Apache License, Version 2.0
 
 Puppet::Type.newtype(:shellvar) do
-  @doc = "Manages variables in simple shell scripts."
+  @doc = 'Manages variables in simple shell scripts.'
 
   ensurable do
-    desc "Create or remove the shellvar entry"
+    desc 'Create or remove the shellvar entry'
     defaultvalues
     block if block_given?
 
     newvalue(:unset) do
-      current = self.retrieve
+      current = retrieve
       if current == :absent
         provider.create
       elsif !provider.is_unset?
@@ -22,7 +22,7 @@ Puppet::Type.newtype(:shellvar) do
     end
 
     newvalue(:exported) do
-      current = self.retrieve
+      current = retrieve
       if current == :absent
         provider.create
       elsif !provider.is_exported?
@@ -32,20 +32,20 @@ Puppet::Type.newtype(:shellvar) do
     end
 
     def insync?(is)
-      return true if should == :absent and provider.resource[:array_append] and provider.exists?
-      return true if should == :unset and is == :present and provider.is_unset?
-      return true if should == :exported and is == :present and provider.is_exported?
-      return false if should == :present and provider.is_unset?
-      return false if should == :present and provider.is_exported?
+      return true if should == :absent && provider.resource[:array_append] && provider.exists?
+      return true if should == :unset && is == :present && provider.is_unset?
+      return true if should == :exported && is == :present && provider.is_exported?
+      return false if should == :present && provider.is_unset?
+      return false if should == :present && provider.is_exported?
       super
     end
 
     def sync
-      if should == :present and provider.is_unset?
+      if should == :present && provider.is_unset?
         provider.ununset
-      elsif should == :present and provider.is_exported?
+      elsif should == :present && provider.is_exported?
         provider.unexport
-      elsif should == :absent and provider.resource[:array_append]
+      elsif should == :absent && provider.resource[:array_append]
         @resource.property(:value).sync
       else
         super
@@ -54,16 +54,16 @@ Puppet::Type.newtype(:shellvar) do
   end
 
   newparam(:name) do
-    desc "The default namevar"
+    desc 'The default namevar'
   end
 
   newparam(:variable) do
-    desc "The name of the variable, e.g. OPTIONS"
+    desc 'The name of the variable, e.g. OPTIONS'
     isnamevar
   end
 
-  newproperty(:value, :array_matching => :all) do
-    desc "Value to change the variable to."
+  newproperty(:value, array_matching: :all) do
+    desc 'Value to change the variable to.'
 
     munge do |v|
       v.to_s
@@ -76,7 +76,7 @@ Puppet::Type.newtype(:shellvar) do
       is_str = is.is_a?(Array) ? is.join(' ') : is
       is_arr = is_str.split(' ')
 
-      if provider.resource[:array_append] and provider.resource[:ensure] == :absent
+      if provider.resource[:array_append] && provider.resource[:ensure] == :absent
         (is_arr - (is_arr - should_arr)).empty?
       elsif provider.resource[:array_append]
         (should_arr - is_arr).empty?
@@ -95,16 +95,16 @@ Puppet::Type.newtype(:shellvar) do
         is_str = is.is_a?(Array) ? is.join(' ') : is
         is_arr = is_str.split(' ')
 
-        if provider.resource[:ensure] == :absent
-          # Remove "should" array from "is" array
-          provider.value = is_arr - Array(self.should)
-        else
-          # Merge the two arrays
-          provider.value = is_arr | Array(self.should)
-        end
+        provider.value = if provider.resource[:ensure] == :absent
+                           # Remove "should" array from "is" array
+                           is_arr - Array(should)
+                         else
+                           # Merge the two arrays
+                           is_arr | Array(should)
+                         end
       else
         # Use the should array
-        provider.value = self.should
+        provider.value = should
       end
     end
   end
@@ -122,9 +122,9 @@ Puppet::Type.newtype(:shellvar) do
 
     munge do |v|
       case v
-      when true, "true", :true
+      when true, 'true', :true
         :auto
-      when false, "false", :false
+      when false, 'false', :false
         :none
       else
         v.to_sym
@@ -145,7 +145,7 @@ Puppet::Type.newtype(:shellvar) do
   end
 
   newparam(:array_append) do
-    desc "Whether to add to existing array values or replace all values."
+    desc 'Whether to add to existing array values or replace all values.'
 
     newvalues :false, :true
 
@@ -153,25 +153,25 @@ Puppet::Type.newtype(:shellvar) do
 
     munge do |v|
       case v
-      when true, "true", :true
+      when true, 'true', :true
         true
-      when false, "false", :false
+      when false, 'false', :false
         false
       end
     end
   end
 
   newparam(:target) do
-    desc "The file in which to store the variable."
+    desc 'The file in which to store the variable.'
     isnamevar
   end
 
   newproperty(:comment) do
-    desc "Text to be stored in a comment immediately above the entry.  It will be automatically prepended with the name of the variable in order for the provider to know whether it controls the comment or not."
+    desc 'Text to be stored in a comment immediately above the entry.  It will be automatically prepended with the name of the variable in order for the provider to know whether it controls the comment or not.'
   end
 
   newparam(:uncomment) do
-    desc "Whether to remove commented value when found."
+    desc 'Whether to remove commented value when found.'
 
     newvalues :true, :false
 
@@ -179,9 +179,9 @@ Puppet::Type.newtype(:shellvar) do
 
     munge do |v|
       case v
-      when true, "true", :true
+      when true, 'true', :true
         :true
-      when false, "false", :false
+      when false, 'false', :false
         :false
       end
     end
@@ -190,26 +190,26 @@ Puppet::Type.newtype(:shellvar) do
   def self.title_patterns
     [
       [
-        /^((\S+)\s+in\s+(\S+))$/,
+        %r{^((\S+)\s+in\s+(\S+))$},
         [
-          [ :name ],
-          [ :variable ],
-          [ :target ]
-        ]
+          [:name],
+          [:variable],
+          [:target],
+        ],
       ],
       [
-        /((\S+))/,
+        %r{((\S+))},
         [
-          [ :name ],
-          [ :variable ]
-        ]
+          [:name],
+          [:variable],
+        ],
       ],
       [
-        /(.*)/,
+        %r{(.*)},
         [
-          [ :name ]
-        ]
-      ]
+          [:name],
+        ],
+      ],
     ]
   end
 
