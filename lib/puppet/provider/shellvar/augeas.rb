@@ -194,7 +194,13 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
       commented_values = []
       unless commented.empty?
         commented_values = if aug.get(commented.first).include?('=')
-                             unquoteit(aug.get(commented.first).split('=')[1]).split(' ')
+                             value = aug.get(commented.first).split('=')[1]
+                             # check if the value after the = is nil otherwise
+                             if value.nil?
+                               value
+                             else
+                               unquoteit(value).split(' ')
+                             end
                            else
                              unquoteit(aug.get(commented.first)).split(' ')
                            end
