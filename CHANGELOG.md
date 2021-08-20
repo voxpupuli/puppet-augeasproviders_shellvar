@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0
+
+- Convert to PDK
+- Add a check for nil when setting values for comments
+- Allow augeasproviders_core 3.x
+
 ## 4.0.0
 
 - Add array remove functionality (#36)
