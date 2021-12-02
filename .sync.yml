@@ -1,16 +1,12 @@
 ---
-.travis.yml:
-  user: "herculesteam"
-  secure: "Ai8WY/gT6inmHTOSUvwV3UdQ/+JvL1YtEIDGhobhxp/l/YnBepG+zS4al+VAkK91XnIFl67/2Fn03gphWa6Zbl3jWoMTU0ezHV72BlzJustY2s6q7BxvvUF/vj3rjAU29lUbgczcnrXhcpiJDCDJRacLykX22uj2s4dyT2lkx/g="
-  before_install_pre:
-    - "travis_retry ./.travis.sh"
-  global_env:
-    - AUGEAS_LENS_LIB=lib/augeas/lenses:spec/fixtures/augeas/lenses
+.github/workflows/ci.yml:
+  additional_packages: libaugeas-dev augeas-tools
 Gemfile:
-  required:
-    ':development':
-      - gem: coveralls
+  optional:
+    ':test':
       - gem: ruby-augeas
 spec/spec_helper.rb:
-  puppet_core_modules:
-    - sshkeys_core
+  spec_overrides:
+    - "require 'augeas_spec'"
+    - "# augeasproviders: setting $LOAD_PATH to work around broken type autoloading"
+    - "$LOAD_PATH.unshift(File.join(__dir__, 'fixtures/modules/augeasproviders_core/lib'))"
