@@ -32,13 +32,14 @@ See [Puppet/Augeas pre-requisites](http://docs.puppetlabs.com/guides/augeas.html
 
 The module can be installed easily ([documentation](http://docs.puppetlabs.com/puppet/latest/reference/modules_installing.html)):
 
-    puppet module install herculesteam/augeasproviders_shellvar
-
+```
+puppet module install puppet/augeasproviders_shellvar
+```
 
 ## Documentation and examples
 
 Type documentation can be generated with `puppet doc -r type` or viewed on the
-[Puppet Forge page](http://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar).
+[Puppet Forge page](http://forge.puppetlabs.com/puppet/augeasproviders_shellvar).
 
 ### manage simple entry
 
@@ -218,4 +219,4 @@ will also change `GRUB_CMDLINE_LINUX="splash cgroup_enable=memory"` to `GRUB_CMD
 
 ## Issues
 
-Please file any issues or suggestions [on GitHub](https://github.com/hercules-team/augeasproviders_shellvar/issues).
+Please file any issues or suggestions [on GitHub](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/issues).
