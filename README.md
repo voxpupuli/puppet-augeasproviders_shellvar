@@ -1,10 +1,13 @@
-[![Puppet Forge Version](http://img.shields.io/puppetforge/v/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
-[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
-[![Puppet Forge Endorsement](https://img.shields.io/puppetforge/e/herculesteam/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/herculesteam/augeasproviders_shellvar)
-[![Build Status](https://img.shields.io/travis/hercules-team/augeasproviders_shellvar/master.svg)](https://travis-ci.org/hercules-team/augeasproviders_shellvar)
-[![Coverage Status](https://img.shields.io/coveralls/hercules-team/augeasproviders_shellvar.svg)](https://coveralls.io/r/hercules-team/augeasproviders_shellvar)
-[![Sponsor](https://img.shields.io/badge/%E2%99%A5-Sponsor-hotpink.svg)](https://github.com/sponsors/raphink)
 
+[![Build Status](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/puppet/augeasproviders_shellvar)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/puppet/augeasproviders_shellvar)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/puppet/augeasproviders_shellvar)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/augeasproviders_shellvar.svg)](https://forge.puppetlabs.com/puppet/augeasproviders_shellvar)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-augeasproviders_shellvar)
+[![Coverage Status](https://img.shields.io/coveralls/voxpupuli/puppet-augeasproviders_shellvar.svg)](https://coveralls.io/r/voxpupuli/puppet-augeasproviders_shellvar)
+[![Apache-2 License](https://img.shields.io/github/license/voxpupuli/puppet-augeasproviders_shellvar.svg)](LICENSE)
 
 # shellvar: type/provider for shell files for Puppet
 
