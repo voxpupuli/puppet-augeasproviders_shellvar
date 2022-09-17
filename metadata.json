@@ -1,12 +1,12 @@
 {
-  "name": "herculesteam-augeasproviders_shellvar",
+  "name": "puppet-augeasproviders_shellvar",
   "version": "4.1.0",
-  "author": "Raphael Pinson",
+  "author": "Vox Pupuli",
   "summary": "Augeas-based shellvar type and provider for Puppet",
   "license": "Apache-2.0",
-  "source": "https://github.com/hercules-team/augeasproviders_shellvar",
-  "project_page": "https://github.com/hercules-team/augeasproviders_shellvar",
-  "issues_url": "https://github.com/hercules-team/augeasproviders_shellvar/issues",
+  "source": "https://github.com/voxpupuli/puppet-augeasproviders_shellvar",
+  "project_page": "https://github.com/voxpupuli/puppet-augeasproviders_shellvar",
+  "issues_url": "https://github.com/voxpupuli/puppet-augeasproviders_shellvar/issues",
   "dependencies": [
     {
       "name": "puppet/augeasproviders_core",
@@ -58,9 +58,5 @@
       "name": "puppet",
       "version_requirement": ">= 6.1.0 < 8.0.0"
     }
-  ],
-  "description": "This module provides a type/provider for shell files using the Augeas configuration API library.",
-  "pdk-version": "1.17.0",
-  "template-url": "pdk-default#1.17.0",
-  "template-ref": "tags/1.17.0-0-gd3a4319"
+  ]
 }
