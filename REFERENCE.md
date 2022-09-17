@@ -10,7 +10,7 @@
 
 ## Resource types
 
-### `shellvar`
+### <a name="shellvar"></a>`shellvar`
 
 Manages variables in simple shell scripts.
 
@@ -40,7 +40,16 @@ Value to change the variable to.
 
 The following parameters are available in the `shellvar` type.
 
-##### `array_append`
+* [`array_append`](#array_append)
+* [`array_type`](#array_type)
+* [`name`](#name)
+* [`provider`](#provider)
+* [`quoted`](#quoted)
+* [`target`](#target)
+* [`uncomment`](#uncomment)
+* [`variable`](#variable)
+
+##### <a name="array_append"></a>`array_append`
 
 Valid values: ``false``, ``true``
 
@@ -48,7 +57,7 @@ Whether to add to existing array values or replace all values.
 
 Default value: ``false``
 
-##### `array_type`
+##### <a name="array_type"></a>`array_type`
 
 Valid values: `auto`, `string`, `array`
 
@@ -60,16 +69,16 @@ Type of array mapping to use, defaults to `auto`.
 
 Default value: `auto`
 
-##### `name`
+##### <a name="name"></a>`name`
 
 The default namevar
 
-##### `provider`
+##### <a name="provider"></a>`provider`
 
 The specific backend to use for this `shellvar` resource. You will seldom need to specify this --- Puppet will usually
 discover the appropriate provider for your platform.
 
-##### `quoted`
+##### <a name="quoted"></a>`quoted`
 
 Valid values: `auto`, `double`, `single`, `none`, ``false``, ``true``
 
@@ -81,13 +90,13 @@ Quoting method to use, defaults to `auto`.
 
 Default value: `auto`
 
-##### `target`
+##### <a name="target"></a>`target`
 
 namevar
 
 The file in which to store the variable.
 
-##### `uncomment`
+##### <a name="uncomment"></a>`uncomment`
 
 Valid values: ``true``, ``false``
 
@@ -95,7 +104,7 @@ Whether to remove commented value when found.
 
 Default value: ``false``
 
-##### `variable`
+##### <a name="variable"></a>`variable`
 
 namevar
 
