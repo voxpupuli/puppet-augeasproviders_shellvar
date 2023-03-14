@@ -40,24 +40,24 @@ Value to change the variable to.
 
 The following parameters are available in the `shellvar` type.
 
-* [`array_append`](#array_append)
-* [`array_type`](#array_type)
-* [`name`](#name)
-* [`provider`](#provider)
-* [`quoted`](#quoted)
-* [`target`](#target)
-* [`uncomment`](#uncomment)
-* [`variable`](#variable)
+* [`array_append`](#-shellvar--array_append)
+* [`array_type`](#-shellvar--array_type)
+* [`name`](#-shellvar--name)
+* [`provider`](#-shellvar--provider)
+* [`quoted`](#-shellvar--quoted)
+* [`target`](#-shellvar--target)
+* [`uncomment`](#-shellvar--uncomment)
+* [`variable`](#-shellvar--variable)
 
-##### <a name="array_append"></a>`array_append`
+##### <a name="-shellvar--array_append"></a>`array_append`
 
-Valid values: ``false``, ``true``
+Valid values: `false`, `true`
 
 Whether to add to existing array values or replace all values.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="array_type"></a>`array_type`
+##### <a name="-shellvar--array_type"></a>`array_type`
 
 Valid values: `auto`, `string`, `array`
 
@@ -69,18 +69,18 @@ Type of array mapping to use, defaults to `auto`.
 
 Default value: `auto`
 
-##### <a name="name"></a>`name`
+##### <a name="-shellvar--name"></a>`name`
 
 The default namevar
 
-##### <a name="provider"></a>`provider`
+##### <a name="-shellvar--provider"></a>`provider`
 
 The specific backend to use for this `shellvar` resource. You will seldom need to specify this --- Puppet will usually
 discover the appropriate provider for your platform.
 
-##### <a name="quoted"></a>`quoted`
+##### <a name="-shellvar--quoted"></a>`quoted`
 
-Valid values: `auto`, `double`, `single`, `none`, ``false``, ``true``
+Valid values: `auto`, `double`, `single`, `none`, `false`, `true`
 
 Quoting method to use, defaults to `auto`.
 
@@ -90,21 +90,21 @@ Quoting method to use, defaults to `auto`.
 
 Default value: `auto`
 
-##### <a name="target"></a>`target`
+##### <a name="-shellvar--target"></a>`target`
 
 namevar
 
 The file in which to store the variable.
 
-##### <a name="uncomment"></a>`uncomment`
+##### <a name="-shellvar--uncomment"></a>`uncomment`
 
-Valid values: ``true``, ``false``
+Valid values: `true`, `false`
 
 Whether to remove commented value when found.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="variable"></a>`variable`
+##### <a name="-shellvar--variable"></a>`variable`
 
 namevar
 
