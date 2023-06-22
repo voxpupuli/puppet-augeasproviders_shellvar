@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/tree/v6.0.0) (2023-06-22)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/compare/v5.0.0...v6.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#54](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/54) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- puppet/augeasproviders\_core: Allow 4.x [\#56](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/56) ([bastelfreak](https://github.com/bastelfreak))
+- Add puppet 8 support [\#55](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/55) ([bastelfreak](https://github.com/bastelfreak))
+- Add RHEL 9 to supported OS [\#51](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/51) ([tuxmea](https://github.com/tuxmea))
+
+**Merged pull requests:**
+
+- Remove submodule in spec/fixtures/augeas  [\#50](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/50) ([ruleant](https://github.com/ruleant))
+- Fix broken Apache-2 license [\#49](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/49) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.0.0](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/tree/v5.0.0) (2022-09-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/compare/4.1.0...v5.0.0)
