@@ -189,7 +189,7 @@ Puppet::Type.type(:shellvar).provide(:augeas, parent: Puppet::Type.type(:augeasp
   def create
     augopen! do |aug|
       # Prefer to create the node next to a commented out entry
-      commented = aug.match("$target/#comment[.=~regexp('#{resource[:variable]}([^a-z\.].*)?')]")
+      commented = aug.match("$target/#comment[.=~regexp('#{resource[:variable]}([^a-z.].*)?')]")
 
       commented_values = []
       unless commented.empty?
