@@ -71,6 +71,8 @@ Default value: `auto`
 
 ##### <a name="-shellvar--name"></a>`name`
 
+namevar
+
 The default namevar
 
 ##### <a name="-shellvar--provider"></a>`provider`
