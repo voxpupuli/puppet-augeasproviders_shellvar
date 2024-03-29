@@ -55,6 +55,7 @@ Puppet::Type.newtype(:shellvar) do
 
   newparam(:name) do
     desc 'The default namevar'
+    isnamevar
   end
 
   newparam(:variable) do
