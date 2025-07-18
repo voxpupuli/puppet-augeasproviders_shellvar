@@ -2,6 +2,8 @@ require 'pathname'
 dir = Pathname.new(__FILE__).parent
 $LOAD_PATH.unshift(dir, File.join(dir, 'lib'), File.join(dir, '..', 'lib'))
 
+require 'fixtures/modules/augeasproviders_core/spec/support/spec/psh_fixtures'
+
 require 'rubygems'
 
 require 'simplecov'
@@ -15,8 +17,6 @@ SimpleCov.start do
   add_filter '/spec/unit/'
   add_filter '/spec/support/'
 end
-
-require 'puppetlabs_spec_helper/module_spec_helper'
 
 include RSpec::Mocks::ExampleMethods
 Puppet[:modulepath] = File.join(dir, 'fixtures', 'modules')

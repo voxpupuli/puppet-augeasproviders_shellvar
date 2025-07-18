@@ -7,6 +7,8 @@ group :test do
   gem 'voxpupuli-test', '~> 11.0',  :require => false
   gem 'puppet_metadata', '~> 5.0',  :require => false
   gem 'ruby-augeas',                :require => false
+  gem 'simplecov',                  :require => false
+  gem 'coveralls',                  :require => false
 end
 
 group :development do
