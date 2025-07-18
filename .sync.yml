@@ -6,8 +6,11 @@ Gemfile:
   optional:
     ':test':
       - gem: ruby-augeas
+      - gem: simplecov
+      - gem: coveralls
 spec/spec_helper.rb:
   spec_overrides:
+    - "require 'spec_helper_local'"
     - "require 'augeas_spec'"
     - "# augeasproviders: setting $LOAD_PATH to work around broken type autoloading"
     - "$LOAD_PATH.unshift(File.join(__dir__, 'fixtures/modules/augeasproviders_core/lib'))"
