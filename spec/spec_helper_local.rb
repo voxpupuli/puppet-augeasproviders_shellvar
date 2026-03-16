@@ -19,6 +19,7 @@ SimpleCov.start do
 end
 
 include RSpec::Mocks::ExampleMethods
+
 Puppet[:modulepath] = File.join(dir, 'fixtures', 'modules')
 
 # There's no real need to make this version dependent, but it helps find
