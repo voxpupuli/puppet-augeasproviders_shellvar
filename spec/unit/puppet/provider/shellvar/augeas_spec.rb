@@ -774,4 +774,41 @@ baz fooz\"" }
       ')
     end
   end
+
+  context 'with commented file containing variable with no value' do
+    let(:tmptarget) { aug_fixture('commented_no_value') }
+    let(:target) { tmptarget.path }
+
+    it 'creates new entry when commented variable has no value' do
+      apply!(Puppet::Type.type(:shellvar).new(
+               name: 'CRYPTO_POLICY',
+               value: 'DEFAULT',
+               target: target,
+               provider: 'augeas',
+      ))
+
+      augparse(target, 'Shellvars.lns', '
+        { "#comment" = "CRYPTO_POLICY=" }
+        { "CRYPTO_POLICY" = "DEFAULT" }
+        { "#comment" = "Some other comment" }
+        { "EXISTING_VAR" = "value" }
+      ')
+    end
+
+    it 'creates new entry with uncomment when commented variable has no value' do
+      apply!(Puppet::Type.type(:shellvar).new(
+               name: 'CRYPTO_POLICY',
+               value: 'DEFAULT',
+               uncomment: true,
+               target: target,
+               provider: 'augeas',
+      ))
+
+      augparse(target, 'Shellvars.lns', '
+        { "CRYPTO_POLICY" = "DEFAULT" }
+        { "#comment" = "Some other comment" }
+        { "EXISTING_VAR" = "value" }
+      ')
+    end
+  end
 end
