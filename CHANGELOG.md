@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v6.0.1](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/tree/v6.0.1) (2024-03-29)
+## [v7.0.0](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/tree/v7.0.0) (2026-05-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/compare/v6.0.1...v7.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#77](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/77) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- puppet/augeasproviders\_core: Allow 5.x [\#91](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/91) ([bastelfreak](https://github.com/bastelfreak))
+- Add Ubuntu 24.04 support [\#82](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/82) ([bwitt](https://github.com/bwitt))
+- Add Debian 13 support [\#81](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/81) ([bastelfreak](https://github.com/bastelfreak))
+- Add support for Debian 12 [\#79](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/79) ([smortex](https://github.com/smortex))
+- metadata.json: Add OpenVox [\#74](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/pull/74) ([jstraw](https://github.com/jstraw))
+
+**Fixed bugs:**
+
+- Cannot alias Shellvar, resource already declared [\#31](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/issues/31)
+
+## [v6.0.1](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/tree/v6.0.1) (2024-04-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-augeasproviders_shellvar/compare/v6.0.0...v6.0.1)
 
