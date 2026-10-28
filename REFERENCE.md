@@ -111,4 +111,3 @@ Default value: `false`
 namevar
 
 The name of the variable, e.g. OPTIONS
-
